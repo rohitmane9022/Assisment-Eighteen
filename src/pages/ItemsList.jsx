@@ -40,7 +40,7 @@ const editItem = (itemId) =>{
         <div> 
 
             {loading ? (
-        <p className="divp">Please wait while we load items...</p>
+        <p>load items...</p>
       ) : (
                         
 

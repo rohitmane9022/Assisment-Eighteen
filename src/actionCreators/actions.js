@@ -43,10 +43,10 @@ export const getItems = () => async (dispatch) =>{
     const receivedResponse = await response.json();
     const itemsList = receivedResponse.items;
 
-    // Dispatch the success action with the items
+   
     dispatch(fetchItemsList(itemsList));
   } catch (error) {
-    // Dispatch the error action with the error message
+
     dispatch(fetchItemsError(error.message));
     console.error("Error", error);
   }
@@ -76,7 +76,7 @@ export const sendFormData = (name, value) => async (dispatch) =>{
 
 
 export const saveFormData = (formData) => async(dispatch) =>{
-  const response = await fetch("https://assisment-eigthteen.rohitmane2.repl.co/api/items", {
+  const res = await fetch("https://assisment-eigthteen.rohitmane2.repl.co/api/items", {
     method: "POST",
     headers : {
       "Content-Type": "application/json", 
@@ -86,7 +86,7 @@ export const saveFormData = (formData) => async(dispatch) =>{
 }
 
 export const editFormData = (formData, itemId) => async(dispatch) =>{
-  const response = await fetch(`https://assisment-eigthteen.rohitmane2.repl.co/api/items/${itemId}`, {
+  const res = await fetch(`https://assisment-eigthteen.rohitmane2.repl.co/api/items/${itemId}`, {
     method: "POST",
     headers : {
       "Content-Type": "application/json", 
@@ -108,7 +108,7 @@ export const sendEmpty = () => async (dispatch) =>{
 export const deleteItemAction = (itemId) => async(dispatch) =>{
      try{
       dispatch(deleteAndFilterItem(itemId))
-      const response = await fetch(`https://assisment-eigthteen.rohitmane2.repl.co/api/items/delete/${itemId}`, {
+      const res = await fetch(`https://assisment-eigthteen.rohitmane2.repl.co/api/items/delete/${itemId}`, {
         method: "DELETE",
         headers : {
           "Content-Type": "application/json", 
@@ -137,7 +137,7 @@ export const updateSalesValues = (valueToBeUpdated)  =>({
 export const addToSales = (valueToAdd) => async (dispatch) => {
   console.log("Sales Data ", valueToAdd)
   try{
-    const response = await fetch("https://assisment-eigthteen.rohitmane2.repl.co/api/sales", {
+    const res = await fetch("https://assisment-eigthteen.rohitmane2.repl.co/api/sales", {
     method: "POST",
     headers : {
       "Content-Type": "application/json", 
@@ -152,8 +152,8 @@ export const addToSales = (valueToAdd) => async (dispatch) => {
 
 export const getSales = () => async (dispatch) =>{
   try{
-    const response = await fetch("https://assisment-eigthteen.rohitmane2.repl.co/api/sales")
-    const receivedResponse = await response.json()
+    const res = await fetch("https://assisment-eigthteen.rohitmane2.repl.co/api/sales")
+    const receivedResponse = await res.json()
     const itemsList = receivedResponse.sales
     console.log("Response", receivedResponse, itemsList)
     dispatch(fetchSalesList(itemsList))
@@ -167,7 +167,7 @@ export const getSales = () => async (dispatch) =>{
 export const updateQuantity = (productId, quantity) => async (dispatch) => {
   console.log("Update Data ", quantity)
   try{
-    const response = await fetch("https://assisment-eigthteen.rohitmane2.repl.co/api/items/update", {
+    const res = await fetch("https://assisment-eigthteen.rohitmane2.repl.co/api/items/update", {
     method: "POST",
     headers : {
       "Content-Type": "application/json", 

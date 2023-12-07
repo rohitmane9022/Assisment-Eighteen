@@ -16,7 +16,7 @@ export default function SalesList (){
         <div> 
           {
             salesList.map((sale, index)=>(
-                <li key={index}><SalesCard sale = {sale}/></li>
+                <div key={index}><SalesCard sale = {sale}/></div>
             ))
           }
         </div>

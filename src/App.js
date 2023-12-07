@@ -17,10 +17,9 @@ import InventoryReports from './pages/InventoryReports';
 function App() {
   return (
     <div className="App">
-      {/* <Link to="/items">Items List</Link>
-      <Link to="/addsale"> Add Sale</Link>
-      <Link to="/sales"> Sales</Link> */}
+     
       <Routes>
+      <Route path='/' element={<HomePage/>}/>
        <Route path='/items' element={<ItemsList/>}/>
         <Route path='/edititem/:id' element={<EditItem/>}/>
         <Route path="/additem" element={<AddItem/>}/>
@@ -33,7 +32,7 @@ function App() {
         <Route path='/reporting-mgmt' element = {<ReportingManagement/>}/>
         <Route path='/inventory-report' element={<InventoryReports/>}/>
         <Route path='/sales-report' element={<SalesReport/>}/>
-        <Route path='/' element={<HomePage/>}/>
+        
       </Routes>
     </div>
   );
