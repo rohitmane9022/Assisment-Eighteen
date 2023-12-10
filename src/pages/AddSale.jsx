@@ -10,19 +10,7 @@ export default function AddSale(){
     let salesData = useSelector((data)=>data.salesData)
     const allItems = useSelector((data)=>data.items)
    
-    function findTheProductDetails() {
-      const item = allItems.find((item) => {
-        if (item.subCatInfo.foodInfo.productDetails.product !== null) {
-          //console.log(7777,  item.subCatInfo.foodInfo.productDetails.product.productName, item.subCatInfo.foodInfo.productDetails.product.brandQtyInfo.brand)
-          return (
-            item.subCatInfo.foodInfo.productDetails.product.productName.toLowerCase() === salesData.productName.toLowerCase() &&
-            item.subCatInfo.foodInfo.productDetails.product.brandQtyInfo.brand.brandName.toLowerCase() === salesData.brand.toLowerCase()
-          );
-        }
-        return false; 
-      });
-      return item;
-    }
+    
 
     useEffect(()=>{fetchItemsList()}, [])
 
@@ -51,19 +39,50 @@ export default function AddSale(){
         dispatch(updateSalesValues({...salesData, quantity: e.target.value}))
     }
 
-    const onAddSales = (e) =>{
-    const product = findTheProductDetails()
+    function findTheProductDetails(allItems, salesData) {
+      const item = allItems.find((item) => {
+        const productDetails = item?.subCatInfo?.foodInfo?.productDetails?.product;
     
-    const productPrice =  product.subCatInfo.foodInfo.productDetails.product && product.subCatInfo.foodInfo.productDetails.product.price
-    const productBrandId = product.subCatInfo.foodInfo.productDetails && product.subCatInfo.foodInfo.productDetails.product.brandQtyInfo.brand._id
-    const productRecordedQty = product.subCatInfo.foodInfo.productDetails && product.subCatInfo.foodInfo.productDetails.product.brandQtyInfo.brand.qtyByBrand
-    const productId = product.subCatInfo.foodInfo.productDetails && product.subCatInfo.foodInfo.productDetails.product._id
-    const updatedQty = product.subCatInfo.foodInfo.productDetails && productRecordedQty - salesData.quantity
-    const revenue = salesData.price*salesData.quantity - productPrice*salesData.quantity;
-    salesData = {...salesData, revenue: revenue}
-    dispatch(addToSales(salesData))
-    dispatch(updateQuantity(productBrandId, updatedQty))
+        if (productDetails !== null) {
+          const productName = productDetails.productName?.toLowerCase();
+          const brandName = productDetails.brandQtyInfo?.brand?.brandName?.toLowerCase();
+    
+          return (
+            productName && brandName &&
+            productName === salesData.productName.toLowerCase() &&
+            brandName === salesData.brand.toLowerCase()
+          );
+        }
+    
+        return false;
+      });
+    
+      return item;
     }
+    
+    const onAddSales = (e) => {
+      const product = findTheProductDetails(allItems, salesData);
+    
+      if (product) {
+        const productPrice = product?.subCatInfo?.foodInfo?.productDetails?.product?.price;
+        const productBrandId = product?.subCatInfo?.foodInfo?.productDetails?.product?.brandQtyInfo?.brand?._id;
+        const productRecordedQty = product?.subCatInfo?.foodInfo?.productDetails?.product?.brandQtyInfo?.brand?.qtyByBrand;
+        const productId = product?.subCatInfo?.foodInfo?.productDetails?.product?._id;
+        
+        if (salesData.productName && salesData.brand) {
+          const updatedQty = productRecordedQty - salesData.quantity;
+          const revenue = salesData.price * salesData.quantity - productPrice * salesData.quantity;
+          salesData = { ...salesData, revenue: revenue };
+          dispatch(addToSales(salesData));
+          dispatch(updateQuantity(productBrandId, updatedQty));
+        } else {
+          console.error("Invalid salesData properties");
+        }
+      } else {
+        console.error("Product details not found");
+      }
+    };
+    
 
     return(
         <div> 

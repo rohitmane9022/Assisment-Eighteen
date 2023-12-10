@@ -36,7 +36,7 @@ const InventoryReducer = (state = initialState, action) =>{
     return {...state, formData: initialState.formData}
 
     case "SALES_ENTRY": 
-    return {...state, salesData: action.payload, loading: false, error: ""}
+    return {...state, salesData: [action.payload], loading: false, error: ""}
 
     case "FETCH_SALES_LIST_SUCCESS": 
    

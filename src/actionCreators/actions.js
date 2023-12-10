@@ -1,3 +1,5 @@
+import axios from "axios"
+
 export const fetchItemsList = (itemsList) => ({
     type: "FETCH_ITEMS_SUCCESS", 
     payload: itemsList
@@ -137,13 +139,7 @@ export const updateSalesValues = (valueToBeUpdated)  =>({
 export const addToSales = (valueToAdd) => async (dispatch) => {
   console.log("Sales Data ", valueToAdd)
   try{
-    const res = await fetch("https://assisment-eigthteen.rohitmane2.repl.co/api/sales", {
-    method: "POST",
-    headers : {
-      "Content-Type": "application/json", 
-    },
-    body: JSON.stringify(valueToAdd)
-   })
+   await axios.post("https://assisment-eigthteen.rohitmane2.repl.co/api/sales",valueToAdd)
   }
    catch(error ){
     console.error("Error", error)
